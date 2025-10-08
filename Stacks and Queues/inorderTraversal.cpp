@@ -16,16 +16,21 @@ using namespace std;
 class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) {
-        vector<int> a ;
-        helper(root, a);
-        return a;
-    }
+        vector<int> res;
+        stack<TreeNode*> stack;
 
-private:
-    void helper(TreeNode *root, vector<int> &a){
-        if(root == nullptr){return;}
-        helper(root->left, a);
-        a.push_back(root->val);
-        helper(root->right, a);
+        while (root != nullptr || !stack.empty()) {
+            while (root != nullptr) {
+                stack.push(root);
+                root = root->left;
+            }
+
+            root = stack.top();
+            stack.pop();
+            res.push_back(root->val);
+            root = root->right;
+        }
+
+        return res;        
     }
 };
